@@ -1,0 +1,5 @@
+django==2.1.7
+psycopg2==2.8.4
+PyJWT==1.7.1
+django-tastypie==0.14.2
+requests==2.7.0

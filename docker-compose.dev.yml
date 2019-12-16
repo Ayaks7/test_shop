@@ -1,0 +1,56 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres
+
+  wait_db:
+    image: willwill/wait-for-it
+    command: db:5432 --timeout=30
+    depends_on:
+      - db
+
+  auth:
+    build: auth/
+    command: sh entrypoint.sh
+    volumes:
+      - ./auth:/opt/app
+    ports:
+      - 8000
+    depends_on:
+      - wait_db
+
+  catalog:
+    build: catalog/
+    container_name: catalog
+    command: sh entrypoint.sh
+    volumes:
+      - ./catalog:/opt/app
+    ports:
+      - 8002
+    depends_on:
+      - wait_db
+
+  order:
+    build: order/
+    container_name: order
+    command: sh entrypoint.sh
+    volumes:
+      - ./order:/opt/app
+    ports:
+      - 8001
+    depends_on:
+      - wait_db
+    
+  proxy:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - wait_db
+
+
+  
