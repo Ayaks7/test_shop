@@ -3,7 +3,7 @@ peewee-async==0.6.0a
 yoyo-migrations==6.1.0
 python-multipart==0.0.5
 fastapi==0.44.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 passlib==1.7.2
 bcrypt==3.1.7
 uvicorn==0.9.0
